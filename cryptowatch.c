@@ -47,7 +47,7 @@ int main(int argc, char **argv) {
 
         int symbol_len = strlen(coins[coin_count - 1].symbol);
 
-        coins[coin_count - 1].symbol[symbol_len] = toupper(arg1[i]);
+        coins[coin_count - 1].symbol[symbol_len] = arg1[i];
         coins[coin_count - 1].symbol[symbol_len + 1] = '\0';
         coins[coin_count - 1].price = 0;
         coins[coin_count - 1].change = 0;
@@ -72,10 +72,11 @@ int main(int argc, char **argv) {
 
 void menu(void) {
     printf(
-        "cryptowatch 0.0.1\n\n"
+        "cryptowatch 0.0.1 by b\n"
         "usage: cryptowatch [symbols]\n"
-        "    |-> cryptowatch btc,eth,ltc\n"
-        "    |-> cryptowatch zec\n"
+        "examples:\n"
+        "    - cryptowatch zec\n"
+        "    - cryptowatch btc,eth,ltc\n"
     );
 }
 
@@ -84,7 +85,7 @@ void *update_ui(void *arg) {
 
     for (;;) {
         printf("\033[2J\033[1;1H");
-        printf("\nCryptowatch 0.0.1 by B:\n\n");
+        printf("\ncryptowatch 0.0.1 by b:\n\n");
         for (int i = 0; i < coin_count; ++i) {
             if (coins[i].color == 0) {
                 printf("%-8s $%9.2f     %.2f%%\n",
@@ -108,7 +109,7 @@ void *update_ui(void *arg) {
                 );
             }
         }
-        printf("\nPrices based on BTC value of: $%.2f\n\n", btc_price);
+        printf("\nprices based on btc value of: $%.2f\n\n", btc_price);
         sleep(1);
     }
 
@@ -118,7 +119,7 @@ void *update_ui(void *arg) {
 void *watch_btc(void *arg) {
     (void)arg;
 
-    const char *market = "USDT-BTC";
+    const char *market = "usdt-btc";
 
     for (;;) {
         char *response = price_data(market);
@@ -147,10 +148,10 @@ void *watch_coin(void *arg) {
 
     char market[32];
 
-    if (strcmp(watched_coin->symbol, "BTC") == 0) {
-        strcpy(market, "USDT-");
+    if (strcmp(watched_coin->symbol, "btc") == 0) {
+        strcpy(market, "usdt-");
     } else {
-        strcpy(market, "BTC-");
+        strcpy(market, "btc-");
     }
 
     strcat(market, watched_coin->symbol);
@@ -184,7 +185,7 @@ void *watch_coin(void *arg) {
         double last = json_get_double(result, "Last");
         double prev = json_get_double(result, "PrevDay");
 
-        if (strcmp(market, "USDT-BTC") == 0) {
+        if (strcmp(market, "usdt-btc") == 0) {
             watched_coin->price = last;
         } else {
             watched_coin->price = last * btc_price;
