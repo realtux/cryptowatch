@@ -3,6 +3,8 @@ the mildy useful crypto ticker
 
 cryptowatch is a simple cryptocurrency price ticker. i wrote it in c because if i didn't, linus torvalds would be upset with me.
 
+![](https://i.imgur.com/XBcnvHl.png)
+
 ### install dependencies
 
 __# ubuntu__
