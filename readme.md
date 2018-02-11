@@ -19,7 +19,7 @@ soon
 
 __# macos__
 ```
-soon
+brew install gcc json-c pkg-config curl
 ```
 
 ### clone & compile (linux & macos)
