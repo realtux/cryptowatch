@@ -126,7 +126,6 @@ void *watch_btc(void *arg) {
 
         if (response == NULL) {
             sleep(60);
-            free(response);
             continue;
         }
 
@@ -164,7 +163,6 @@ void *watch_coin(void *arg) {
 
         if (response == NULL) {
             sleep(10);
-            free(response);
             continue;
         }
 
@@ -175,8 +173,7 @@ void *watch_coin(void *arg) {
 
         // if a coin is watched but doesn't exist on trex, just exit the thread
         if (message == NULL || strcmp(message, "INVALID_MARKET") == 0) {
-            free(message);
-            free(response);
+            if (response != NULL) free(response);
             return NULL;
         }
 
