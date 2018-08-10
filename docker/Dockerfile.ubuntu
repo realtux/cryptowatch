@@ -1,0 +1,23 @@
+###
+# Compile stage
+###
+FROM ubuntu:18.04 as base
+
+RUN apt-get update -qq\
+      && apt-get install -y build-essential pkg-config libjson-c-dev libcurl4-openssl-dev
+
+COPY . /usr/src/cryptowatch
+WORKDIR /usr/src/cryptowatch
+
+RUN make
+
+###
+# Build our runtime image and include our artifact
+###
+FROM ubuntu:18.04
+
+RUN apt-get update -qq && apt-get install -y libjson-c-dev libcurl4-openssl-dev
+
+COPY --from=base /usr/src/cryptowatch/cryptowatch /usr/bin/cryptowatch
+
+ENTRYPOINT ["cryptowatch"]
