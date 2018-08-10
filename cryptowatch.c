@@ -5,6 +5,7 @@
 #include <string.h>
 #include <stdio.h>
 #include <unistd.h>
+#include <signal.h>
 
 #include <curl/curl.h>
 #include <json.h>
@@ -14,7 +15,12 @@
 static int coin_count = 1;
 static double btc_price = 0;
 
+void catch_interrupt(int sig) {
+  exit(0);
+}
+
 int main(int argc, char **argv) {
+    signal(SIGINT, catch_interrupt);
     setlocale(LC_ALL, "");
 
     if (argc < 2) {

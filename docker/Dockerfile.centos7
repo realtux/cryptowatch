@@ -1,0 +1,23 @@
+###
+# Compile stage
+###
+FROM centos:7 as base
+
+RUN yum groupinstall -y "Development tools"
+RUN yum install -y json-c-devel libcurl-devel
+
+COPY . /usr/src/cryptowatch
+WORKDIR /usr/src/cryptowatch
+
+RUN make
+
+###
+# Build our runtime image and include our artifact
+###
+FROM centos:7
+
+RUN yum install -y json-c-devel
+
+COPY --from=base /usr/src/cryptowatch/cryptowatch /usr/bin/cryptowatch
+
+ENTRYPOINT ["cryptowatch"]

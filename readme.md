@@ -8,25 +8,57 @@ cryptowatch is a simple cryptocurrency price ticker. i wrote it in c because if 
 ### install dependencies
 
 __# ubuntu__
-```
+```sh
 sudo apt-get install build-essential pkg-config libjson-c-dev libcurl4-openssl-dev
 ```
 
 __# rhel__
-```
-soon
+```sh
+yum groupinstall "Development tools"
+yum install json-c-devel libcurl-devel
 ```
 
 __# macos__
-```
+```sh
 brew install gcc json-c pkg-config curl
 ```
 
 ### clone & compile (linux & macos)
 
-```
+```sh
 git clone https://github.com/ebrian/cryptowatch
 cd cryptowatch
 make
 ./cryptowatch
+```
+
+### clone, compile and run (docker)
+
+```sh
+git clone https://github.com/ebrian/cryptowatch
+cd cryptowatch
+```
+
+__# centos__
+```sh
+docker build -f docker/Dockerfile.centos7 -t cryptowatch .
+docker run -ti --rm cryptowatch
+```
+or
+```sh
+docker build -f docker/Dockerfile.centos7 -t cryptowatch .
+alias cryptowatch='docker run -ti --rm cryptowatch'
+cryptowatch
+```
+
+__# ubuntu__
+```sh
+docker build -f docker/Dockerfile.ubuntu -t cryptowatch .
+docker run -ti --rm cryptowatch
+```
+or
+```sh
+docker build -f docker/Dockerfile.ubuntu -t cryptowatch .
+alias cryptowatch='docker run -ti --rm cryptowatch'
+cryptowatch
 ```
